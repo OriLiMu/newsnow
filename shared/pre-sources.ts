@@ -305,6 +305,33 @@ export const originSources = {
       },
     },
   },
+  "google": {
+    name: "Google News",
+    color: "blue",
+    home: "https://news.google.com",
+    type: "realtime",
+    column: "world",
+    interval: Time.Fast,
+  },
+  "reuters": {
+    name: "Reuters",
+    color: "red",
+    home: "https://www.reuters.com",
+    type: "realtime",
+    column: "world",
+    interval: Time.Fast,
+    sub: {
+      breaking: {
+        title: "Breaking News",
+        type: "realtime",
+        interval: Time.Realtime,
+      },
+      top: {
+        title: "Top News",
+        interval: Time.Common,
+      },
+    },
+  },
 } as const satisfies Record<string, OriginSource>
 
 export function genSources() {
