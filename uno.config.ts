@@ -1,6 +1,11 @@
+import fs from "node:fs"
+import path from "node:path"
 import { defineConfig, presetIcons, presetWind3, transformerDirectives, transformerVariantGroup } from "unocss"
 import { hex2rgba } from "@unocss/rule-utils"
-import { sources } from "./shared/sources"
+import type { Color } from "./shared/types"
+
+// 读取 sources.json 文件
+const sourcesJson = JSON.parse(fs.readFileSync(path.resolve("./shared/sources.json"), "utf-8")) as Record<string, { color: Color }>
 
 export default defineConfig({
   mergeSelectors: false,
@@ -36,7 +41,7 @@ export default defineConfig({
     "btn": "op50 hover:op85",
   },
   safelist: [
-    ...["orange", ...new Set(Object.values(sources).map(k => k.color))].map(k =>
+    ...["orange", ...new Set(Object.values(sourcesJson).map(k => k.color))].map((k: string) =>
       `bg-${k} color-${k} border-${k} sprinkle-${k} shadow-${k}
        bg-${k}-500 color-${k}-500
        dark:bg-${k} dark:color-${k}`.trim().split(/\s+/)).flat(),
